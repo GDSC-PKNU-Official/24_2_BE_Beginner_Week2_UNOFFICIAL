@@ -5,5 +5,6 @@
 ## 설계
 
 ## 팀원
-|정유빈|윤회성|
+| ![](https://github.com/xxubin04.png?size=120) | ![](https://github.com/squarecaaat.png?size=120) |
 |:--:|:--:|
+|[정유빈](https://github.com/xxubin04)|[윤회성](https://github.com/squareCaaat)|
