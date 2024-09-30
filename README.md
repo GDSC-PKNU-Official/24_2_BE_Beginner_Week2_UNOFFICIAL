@@ -1,0 +1,2 @@
+# 24_2_BE_Beginner_Week2_UNOFFICIAL
+BE WEEK2
