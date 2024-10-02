@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ProductDao {
     private static final String DELIMITER = ",";
-    private static final String DATA_PATH = "resource";
+    private static final String DATA_PATH = "../../resource";
     private static final String DATA_FILE_NAME = "productList.csv";
     private static final List<Product> productList = new ArrayList<>();
 
@@ -23,8 +23,7 @@ public class ProductDao {
     }
 
     private void readProductData() {
-//        String dataFilePath = DATA_PATH + "/" + DATA_FILE_NAME;
-        String dataFilePath = "../../resources/" + DATA_FILE_NAME;
+        String dataFilePath = DATA_PATH + "/" + DATA_FILE_NAME;
         InputStream inputStream = ProductDao.class.getResourceAsStream(dataFilePath);
         if(inputStream == null){
             System.err.println("No data in " + dataFilePath);
