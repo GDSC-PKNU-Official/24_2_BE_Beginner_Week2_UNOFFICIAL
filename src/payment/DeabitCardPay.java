@@ -1,6 +1,6 @@
 package payment;
 
-public class ApplePay implements PaymentStrategy{
+public class DeabitCardPay implements PaymentStrategy{
     private int balance = 0;
 
     public void charge(int amount){
