@@ -24,10 +24,7 @@ public class ProductDao {
         String[] args;
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))){
             String line;
-            int increment = 0;
             while ((line = bufferedReader.readLine()) != null){
-                increment++;
-                if(increment < 3) continue;
                 args = line.split(DELIMITER);
                 long id = Long.parseLong(args[0].trim());
                 Category category = null;
@@ -42,7 +39,8 @@ public class ProductDao {
                 String brand = args[3].trim();
                 double price = Double.parseDouble(args[4].trim());
                 int stock = Integer.parseInt(args[5].trim());
-                Product product = new Product(id, name, category, brand, price, stock);
+
+                productList.add(new Product(id, name, category, brand, price, stock));
             }
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
