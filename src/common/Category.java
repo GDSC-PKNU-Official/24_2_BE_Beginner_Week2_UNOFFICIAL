@@ -5,5 +5,6 @@ public enum Category {
     UNDERWEAR,
     SOCKS,
     SHOES,
-    HAT
+    HAT,
+    NO_CATEGORY
 }
