@@ -2,7 +2,7 @@ package payment;
 
 import java.time.LocalDateTime;
 
-public class CreditPay implements PaymentStrategy {
+public class CreditCardPay implements PaymentStrategy {
     private static int accumulatedAmount = 0;
     private LocalDateTime paymentDate = LocalDateTime.now();
 
