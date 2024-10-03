@@ -1,8 +1,12 @@
 package customer;
 
+import cart.OrderSheet;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Customer {
     private static String userId;
@@ -11,6 +15,7 @@ public class Customer {
     private long account;  // 잔액
     private int payDate;  // 신용카드 결제일
     private long money;  // 금액
+    private List<OrderSheet> orderSheetList = new ArrayList<OrderSheet>();
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
