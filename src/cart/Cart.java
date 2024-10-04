@@ -86,6 +86,8 @@ public class Cart {
 
     // 삭제할 상품 장바구니에 없으면 X, 있으면 삭제
     public void deleteProduct(long productId, int discardQuantity) {
+        boolean didDiscard = false;
+        deleteFunction:
         for(Map<Product, Integer> cartItem : cart) {
             for (Map.Entry<Product, Integer> productQuantityMap : cartItem.entrySet()) {
                 // 삭제할 상품을 찾고 삭제 수량이 현재 수량과 많거나 같으면 해당 항목을 제거
@@ -94,15 +96,19 @@ public class Cart {
                         cartNum -= productQuantityMap.getValue();
                         String discardProductName = productQuantityMap.getKey().getName();
                         cart.remove(productQuantityMap);
+                        didDiscard = true;
+
                         System.out.println("상품: " + discardProductName + " 을 제거했습니다.");
+                        break deleteFunction;
                     } else {
                         // 수량 줄이기
                         productQuantityMap.setValue(productQuantityMap.getValue() - discardQuantity);
                         cartNum -= discardQuantity;
+                        didDiscard = true;
+
                         System.out.println("상품: " + productQuantityMap.getKey().getName() + " 을 " + discardQuantity + "개 제거했습니다.");
+                        break deleteFunction;
                     }
-                } else {
-                    System.out.println("장바구니에서 상품 ID: " + productId + " 에 해당하는 상품을 찾지 못 했습니다.");
                 }
             }
         }
@@ -129,7 +135,6 @@ public class Cart {
                     System.out.println("상품명: " + productMap.getKey().getName());
                     System.out.println("상품 가격: " + productMap.getKey().getPrice() + " 원");
                     System.out.println("주문 수량: " + productMap.getValue());
-                    System.out.println("결제할 금액: " + totalAmount + " 원");
                 }
             }
             System.out.println("총 결제할 금액: " + totalAmount + " 원");
