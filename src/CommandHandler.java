@@ -33,6 +33,17 @@ public class CommandHandler {
         System.out.println("exit: 서비스를 종료합니다.");
     }
 
+    public void listCommand(){
+        System.out.println("상품 id(숫자), 상품명, 상품종류, 브랜드명, 가격(원), 현재 재고(개) 순입니다.");
+        if(!productList.isEmpty()){
+            for (Product product : productList) {
+                System.out.println(product.toString());
+            }
+        }
+        else {
+            System.out.println("죄송합니다. 현재 상품이 없습니다.");
+        }
+    }
 
 
 }
