@@ -21,7 +21,7 @@ public class Cart {
     // 장바구니 안의 상품 항목 개수
     private int cartNum = 0;
 
-    List<Map<Product, Integer>> cart = new ArrayList<>();
+    private List<Map<Product, Integer>> cart = new ArrayList<>();
 
     // 상품의 유효성 검사
     private Product checkValidation(long productId, int quantity) {
