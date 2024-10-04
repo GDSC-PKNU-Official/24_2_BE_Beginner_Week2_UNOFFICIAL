@@ -49,7 +49,7 @@ public class ProductDao {
                 if(category == null) category = Category.NO_CATEGORY;
                 String name = args[2].trim();
                 String brand = args[3].trim();
-                int price = Integer.parseInt(args[4].trim());
+                long price = Long.parseLong(args[4].trim());
                 int stock = Integer.parseInt(args[5].trim());
 
                 productList.add(new Product(id, name, category, brand, price, stock));
