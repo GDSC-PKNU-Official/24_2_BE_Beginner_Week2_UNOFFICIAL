@@ -27,9 +27,9 @@ public class CommandHandler {
         System.out.println("list: 현재 상품 목록을 출력합니다.");
         System.out.println("add {상품id} {상품 수량}: 해당 상품을 장바구니에 수량만큼 추가합니다.");
         System.out.println("discard {상품id} {상품 수량}: 해당 상품을 장바구니에 수량만큼 빼거나 제거합니다.");
-        System.out.println("show cart: 현재 장바구니에 담긴 모든 물품을 출력합니다.");
+        System.out.println("cart: 현재 장바구니에 담긴 모든 물품을 출력합니다.");
         System.out.println("order: 장바구니에 있는 상품을 주문합니다.");
-        System.out.println("show order: 주문한 주문서를 전부 보여줍니다.");
+        System.out.println("orders: 주문한 주문서를 전부 보여줍니다.");
         System.out.println("exit: 서비스를 종료합니다.");
     }
 
