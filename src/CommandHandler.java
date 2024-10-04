@@ -9,15 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * 입출력을 제어하고 사용자로부터 입력받은 명령을 처리하는 클래스
+ */
 public class CommandHandler {
     private static final List<Product> productList = new ArrayList<Product>();
 
     private final Cart cart;
     private final Customer customer;
 
+    // Constructor DI
     public CommandHandler(Cart cart, Customer customer) {
         this.cart = cart;
         this.customer = customer;
+        // 파일 데이터로부터 상품 목록을 초기화합니다.
         ProductDao productDao = new ProductDao();
         productList.addAll(productDao.getProductList());
         System.out.println("저희 서비스에 오신걸 환영합니다.");
