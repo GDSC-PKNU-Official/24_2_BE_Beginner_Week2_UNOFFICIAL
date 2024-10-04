@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ProductDao {
     private static final String DELIMITER = ",";
-    private static final String DATA_PATH = "../../resources";
+    private static final String DATA_PATH = "../resources";
     private static final String DATA_FILE_NAME = "productList.csv";
     private static final List<Product> productList = new ArrayList<>();
 
