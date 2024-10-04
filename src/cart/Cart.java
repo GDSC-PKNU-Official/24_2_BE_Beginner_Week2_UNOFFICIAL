@@ -127,6 +127,8 @@ public class Cart {
                     System.out.println("주문 수량: " + productMap.getValue());
                 }
             }
+        } else {
+            System.out.println("장바구니에 상품을 담지 않았습니다.");
         }
     }
 
