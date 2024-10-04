@@ -53,6 +53,16 @@ public class Customer {
         }
     }
 
+    public void showMyOrders(){
+        if(!orderSheetList.isEmpty()){
+            for (OrderSheet orderSheet : orderSheetList){
+                orderSheet.showSheet();
+            }
+        } else {
+            System.out.println("주문 내역이 없습니다.");
+        }
+    }
+
     // 잔액 확인 메소드
     public long accountCheck(long account) {
         return this.account;
