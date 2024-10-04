@@ -122,8 +122,9 @@ public class Cart {
                 for(Map.Entry<Product, Integer> productMap : cartItem.entrySet()){
                     System.out.println("상품 ID: " + productMap.getKey().getId());
                     System.out.println("상품명: " + productMap.getKey().getName());
-                    System.out.println("상품 가격: " + productMap.getKey().getPrice());
+                    System.out.println("상품 가격: " + productMap.getKey().getPrice() + " 원");
                     System.out.println("주문 수량: " + productMap.getValue());
+                    System.out.println("결제할 금액: " + totalAmount + " 원");
                 }
             }
         } else {
