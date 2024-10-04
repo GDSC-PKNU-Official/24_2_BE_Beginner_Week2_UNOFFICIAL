@@ -74,7 +74,7 @@ public class CommandHandler {
 
     public void cartCommand(){
         System.out.println("현재 장바구니 품목: ");
-        cart.showInCart();
+        cart.showCart();
     }
     
     public void orderCommand(){
