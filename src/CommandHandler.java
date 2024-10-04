@@ -1,10 +1,13 @@
 import cart.Cart;
+import cart.OrderSheet;
+import cart.exception.CartLimitExcessException;
 import customer.Customer;
 import product.Product;
 import product.ProductDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CommandHandler {
     private static final List<Product> productList = new ArrayList<Product>();
@@ -52,8 +55,8 @@ public class CommandHandler {
         int orderQuantity = scanner.nextInt();
         try{
             cart.addProduct(productId, orderQuantity);
-        } catch (CartLimitExcessException cle){
-            throw new RuntimeException(cle);
+        } catch (CartLimitExcessException e){
+            throw new RuntimeException(e);
         }
     }
 
@@ -62,6 +65,23 @@ public class CommandHandler {
         long productId = scanner.nextLong();
         int orderQuantity = scanner.nextInt();
         cart.deleteProduct(productId, orderQuantity);
+    }
+    
+    public void orderCommand(){
+        OrderSheet resultSheet = cart.makeOrder();
+        if(resultSheet != null){
+            customer.addMyOrder(resultSheet);
+            System.out.println("주문이 완료되었습니다. 주문내역: ");
+            resultSheet.showSheet();
+        } else {
+            // 추후 Exception 처리할 예정
+            System.out.println("주문이 유효하지 않습니다."); 
+        }
+    }
+
+    public void ordersCommand(){
+        System.out.println("현재 고개님의 주문내역입니다: ");
+        customer.showMyOrders();
     }
 
 }
