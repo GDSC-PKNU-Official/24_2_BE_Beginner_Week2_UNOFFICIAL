@@ -16,7 +16,7 @@ public class Cart {
     private static final int MAX_NUM = 50;
 
     // 장바구니 안의 상품 총액
-    private long total;
+    private long totalAmount = 0;
 
     // 장바구니 안의 상품 항목 개수
     private int cartNum = 0;
