@@ -13,7 +13,7 @@ import static product.ProductDao.productList;
 public class Cart {
 
     // 카트에 최대 50개의 항목만 담을 수 있음
-    private static int MAX_NUM = 50;
+    private static final int MAX_NUM = 50;
 
     // 장바구니 안의 상품 총액
     private long total;
