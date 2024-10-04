@@ -133,6 +133,6 @@ public class Cart {
     }
 
     public OrderSheet makeOrder(){
-        return new OrderSheet(cart, total);
+        return new OrderSheet(cart, totalAmount);
     }
 }
