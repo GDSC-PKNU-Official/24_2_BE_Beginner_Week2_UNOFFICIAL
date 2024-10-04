@@ -84,24 +84,25 @@ public class Cart {
     }
 
     // 삭제할 상품 장바구니에 없으면 X, 있으면 삭제
-    public void deleteProduct(Product productId, int quantity) {
-
-        for(Map<Product, Integer> product : cart) {
-            if (product.containsKey(productId)) {
-                // 삭제하고자 하는 수량이 현재 장바구니에 들어있는 수량보다 많거나 같으면, 해당 항목 전부 삭제
-                if (product.get(productId) <= quantity) {
-                    cartNum -= product.get(productId);  // 해당 상품의 개수 전부 감소
-                    cart.remove(product);
-                    System.out.println("장바구니에서 해당 상품을 제거하였습니다.");
+    public void deleteProduct(long productId, int discardQuantity) {
+        for(Map<Product, Integer> cartItem : cart) {
+            for (Map.Entry<Product, Integer> productQuantityMap : cartItem.entrySet()) {
+                // 삭제할 상품을 찾고 삭제 수량이 현재 수량과 많거나 같으면 해당 항목을 제거
+                if(productId == productQuantityMap.getKey().getId()) {
+                    if (productQuantityMap.getValue() <= discardQuantity) {
+                        cartNum -= productQuantityMap.getValue();
+                        String discardProductName = productQuantityMap.getKey().getName();
+                        cart.remove(productQuantityMap);
+                        System.out.println("상품: " + discardProductName + " 을 제거했습니다.");
+                    } else {
+                        // 수량 줄이기
+                        productQuantityMap.setValue(productQuantityMap.getValue() - discardQuantity);
+                        cartNum -= discardQuantity;
+                        System.out.println("상품: " + productQuantityMap.getKey().getName() + " 을 " + discardQuantity + "개 제거했습니다.");
+                    }
                 } else {
-                    product.put(productId, product.get(productId) - quantity);
-                    cartNum -= quantity;
-                    System.out.println("장바구니에서 해당 상품을 " + quantity + "개 제거하였습니다.");
+                    System.out.println("장바구니에서 상품 ID: " + productId + " 에 해당하는 상품을 찾지 못 했습니다.");
                 }
-                // deleteCheck = true;
-            } else {
-                // 삭제하고자 하는 상품이 cart에 없다면,
-                System.out.println("장바구니에서 " + productId + " 상품을 찾을 수 없습니다.");
             }
         }
     }
