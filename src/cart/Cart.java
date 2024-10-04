@@ -47,14 +47,14 @@ public class Cart {
 
     // id와 stock의 유효성 검사는 아직 구현 X -> 저장되어 있는 Product 객체로서 유효한지 확인?
     // 상품 정보를 cart에 저장
-    public void addProduct(long productId, int quantity) throws CartLimitExcessException{
+    public void addProduct(long productId, int orderQuantity) throws CartLimitExcessException{
         // 장바구니에 저장된 항목 개수가 50개 이상이라면, 저장 불가
         if (cartNum >= MAX_NUM) {
             throw new CartLimitExcessException(cartNum);
         } else {
             // 상품유무, 재고유무의 유효성 검사
             // productId로 Product 객체 찾기
-            Product productById = checkValidation(productId, quantity);
+            Product productById = checkValidation(productId, orderQuantity);
 
             // 유효한 상품이 아니라면, 끝
             if (productById == null)
@@ -66,7 +66,7 @@ public class Cart {
             // 이미 cart에 있는 상품이라면, 개수만 수정
             for(Map<Product, Integer> product : cart) {
                 if (product.containsKey(productById)) {
-                    product.put(productById, product.get(productById) + quantity);
+                    product.put(productById, product.get(productById) + orderQuantity);
                     productExistence = true;
                     break;
                 }
@@ -74,12 +74,12 @@ public class Cart {
 
             if (!productExistence) {
                 Map<Product, Integer> newProduct = new HashMap<>();
-                newProduct.put(productById, quantity);
+                newProduct.put(productById, orderQuantity);
                 cart.add(newProduct);
             }
             System.out.println("장바구니에 상품이 담겼습니다.");
 
-            cartNum += quantity;
+            cartNum += orderQuantity;
         }
     }
 
