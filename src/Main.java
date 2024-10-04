@@ -1,5 +1,4 @@
 import cart.Cart;
-import cart.exception.CartLimitExcessException;
 import customer.Customer;
 
 import java.util.Scanner;
