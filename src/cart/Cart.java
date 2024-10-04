@@ -23,21 +23,8 @@ public class Cart {
 
     List<Map<Product, Integer>> cart = new ArrayList<>();
 
-    // CartDTO 객체 생성
-    CartDTO cartInfo = new CartDTO();
-
-
-    // 사용자로부터 입력받은 productId로 Product 객체 찾기
-//    public Product productById(long productId) {
-//        for(Product product : productList) {
-//            if (product.getId() == productId)
-//                return product;
-//        }
-//        return null;
-//    }
-
     // 상품의 유효성 검사
-    public Product checkValidation(long productId, int quantity) {
+    private Product checkValidation(long productId, int quantity) {
 
         for(Product product : productList) {
             // 상품의 존재여부 검사
