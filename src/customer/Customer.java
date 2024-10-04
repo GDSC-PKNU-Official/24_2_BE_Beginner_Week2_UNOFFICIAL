@@ -19,6 +19,8 @@ public class Customer {
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+    public Customer() {}
+
     public Customer(String userId, String userAddress, String userPhoneNumber, long account, int payDate) {
         this.userId = userId;
         this.userAddress = userAddress;
