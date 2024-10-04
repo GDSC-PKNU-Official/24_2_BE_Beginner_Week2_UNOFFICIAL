@@ -117,6 +117,19 @@ public class Cart {
         }
     }
 
+    public void showCart(){
+        if(!cart.isEmpty()){
+            for (Map<Product, Integer> cartItem : cart){
+                for(Map.Entry<Product, Integer> productMap : cartItem.entrySet()){
+                    System.out.println("상품 ID: " + productMap.getKey().getId());
+                    System.out.println("상품명: " + productMap.getKey().getName());
+                    System.out.println("상품 가격: " + productMap.getKey().getPrice());
+                    System.out.println("주문 수량: " + productMap.getValue());
+                }
+            }
+        }
+    }
+
     public OrderSheet makeOrder(){
         return new OrderSheet(cart, total);
     }
