@@ -24,7 +24,7 @@ public class Cart {
     List<Map<Product, Integer>> cart = new ArrayList<>();
 
     // 상품의 유효성 검사
-    public Product checkValidation(long productId, int quantity) {
+    private Product checkValidation(long productId, int quantity) {
 
         for(Product product : productList) {
             // 상품의 존재여부 검사
