@@ -23,6 +23,18 @@ public class Product {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
     public String toString(){
         return "id: " + id + ", name: " + name + ", category: " + category + ", brand: " + brand + ", price: " + price + ", stock: " + stock;
     }
