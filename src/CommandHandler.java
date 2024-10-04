@@ -45,5 +45,23 @@ public class CommandHandler {
         }
     }
 
+    public void addCommand(Scanner scanner){
+        System.out.println("장바구니에는 최대 50개의 상품을 담을 수 있습니다.");
+        System.out.print("상품 id와 수량을 입력해주세요: ");
+        long productId = scanner.nextLong();
+        int orderQuantity = scanner.nextInt();
+        try{
+            cart.addProduct(productId, orderQuantity);
+        } catch (CartLimitExcessException cle){
+            throw new RuntimeException(cle);
+        }
+    }
+
+    public void discardCommand(Scanner scanner){
+        System.out.print("장바구니에 뺄 상품 id와 수량을 입력해주세요: ");
+        long productId = scanner.nextLong();
+        int orderQuantity = scanner.nextInt();
+        cart.deleteProduct(productId, orderQuantity);
+    }
 
 }
