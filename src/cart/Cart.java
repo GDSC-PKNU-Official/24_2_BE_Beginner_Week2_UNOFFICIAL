@@ -81,6 +81,7 @@ public class Cart {
 
             cartNum += orderQuantity;
         }
+        calculateTotalAmount();
     }
 
     // 삭제할 상품 장바구니에 없으면 X, 있으면 삭제
@@ -105,6 +106,10 @@ public class Cart {
                 }
             }
         }
+        if(!didDiscard){
+            System.out.println("장바구니에서 상품 ID: " + productId + " 에 해당하는 상품을 찾지 못 했습니다.");
+        }
+        calculateTotalAmount();
     }
 
     // 장바구니 항목들의 총액 계산
@@ -127,6 +132,7 @@ public class Cart {
                     System.out.println("결제할 금액: " + totalAmount + " 원");
                 }
             }
+            System.out.println("총 결제할 금액: " + totalAmount + " 원");
         } else {
             System.out.println("장바구니에 상품을 담지 않았습니다.");
         }
