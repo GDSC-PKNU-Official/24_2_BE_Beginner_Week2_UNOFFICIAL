@@ -66,6 +66,11 @@ public class CommandHandler {
         int orderQuantity = scanner.nextInt();
         cart.deleteProduct(productId, orderQuantity);
     }
+
+    public void cartCommand(){
+        System.out.println("현재 장바구니 품목: ");
+        cart.showInCart();
+    }
     
     public void orderCommand(){
         OrderSheet resultSheet = cart.makeOrder();
