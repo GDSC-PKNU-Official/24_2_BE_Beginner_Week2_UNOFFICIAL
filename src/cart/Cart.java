@@ -108,12 +108,10 @@ public class Cart {
     }
 
     // 장바구니 항목들의 총액 계산
-    public void getTotal(List<Map<Product, Integer>> cart, Long quantity) {
-        total = 0;
-
-        for(Map<Product, Integer> productInfo : cart) {
-            for(Map.Entry<Product, Integer> product : productInfo.entrySet()) {
-                total += product.getKey().getPrice() * product.getValue();
+    private void calculateTotalAmount() {
+        for(Map<Product, Integer> cartItem : cart) {
+            for(Map.Entry<Product, Integer> productQuantityEntry : cartItem.entrySet()) {
+                totalAmount += productQuantityEntry.getKey().getPrice() * productQuantityEntry.getValue();
             }
         }
     }
