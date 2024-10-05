@@ -1,3 +1,5 @@
+package command_handler;
+
 import cart.Cart;
 import cart.OrderSheet;
 import cart.exception.CartLimitExcessException;
@@ -12,14 +14,15 @@ import java.util.Scanner;
 /**
  * 입출력을 제어하고 사용자로부터 입력받은 명령을 처리하는 클래스
  */
-public class CommandHandler {
+public class CommandHandlerImpl implements CommandHandler {
     private static final List<Product> productList = new ArrayList<Product>();
 
     private final Cart cart;
     private final Customer customer;
+    private final Scanner scanner = new Scanner(System.in);
 
     // Constructor DI
-    public CommandHandler(Cart cart, Customer customer) {
+    public CommandHandlerImpl(Cart cart, Customer customer) {
         this.cart = cart;
         this.customer = customer;
         // 파일 데이터로부터 상품 목록을 초기화합니다.
@@ -29,6 +32,7 @@ public class CommandHandler {
         helpCommand();
     }
 
+    @Override
     public void helpCommand(){
         System.out.println("우리 서비스는 다음 명령을 제공하고 있습니다.");
         System.out.println("help: 우리 서비스가 제공하고 있는 명령어 목록을 출력합니다.");
@@ -41,6 +45,7 @@ public class CommandHandler {
         System.out.println("exit: 서비스를 종료합니다.");
     }
 
+    @Override
     public void listCommand(){
         System.out.println("상품 id(숫자), 상품명, 상품종류, 브랜드명, 가격(원), 현재 재고(개) 순입니다.");
         if(!productList.isEmpty()){
@@ -53,7 +58,8 @@ public class CommandHandler {
         }
     }
 
-    public void addCommand(Scanner scanner){
+    @Override
+    public void addCommand(){
         System.out.println("장바구니에는 최대 50개의 상품을 담을 수 있습니다.");
         System.out.print("상품 id와 수량을 입력해주세요: ");
         long productId = scanner.nextLong();
@@ -65,18 +71,21 @@ public class CommandHandler {
         }
     }
 
-    public void discardCommand(Scanner scanner){
+    @Override
+    public void discardCommand(){
         System.out.print("장바구니에 뺄 상품 id와 수량을 입력해주세요: ");
         long productId = scanner.nextLong();
         int orderQuantity = scanner.nextInt();
         cart.deleteProduct(productId, orderQuantity);
     }
 
+    @Override
     public void cartCommand(){
         System.out.println("현재 장바구니 품목: ");
-        cart.showInCart();
+        cart.showCart();
     }
-    
+
+    @Override
     public void orderCommand(){
         OrderSheet resultSheet = cart.makeOrder();
         if(resultSheet != null){
@@ -89,6 +98,7 @@ public class CommandHandler {
         }
     }
 
+    @Override
     public void ordersCommand(){
         System.out.println("현재 고개님의 주문내역입니다: ");
         customer.showMyOrders();

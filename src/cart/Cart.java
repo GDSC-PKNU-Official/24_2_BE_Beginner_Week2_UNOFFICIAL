@@ -13,15 +13,15 @@ import static product.ProductDao.productList;
 public class Cart {
 
     // 카트에 최대 50개의 항목만 담을 수 있음
-    private static int MAX_NUM = 50;
+    private static final int MAX_NUM = 50;
 
     // 장바구니 안의 상품 총액
-    private long total;
+    private long totalAmount = 0;
 
     // 장바구니 안의 상품 항목 개수
     private int cartNum = 0;
 
-    List<Map<Product, Integer>> cart = new ArrayList<>();
+    private List<Map<Product, Integer>> cart = new ArrayList<>();
 
     // 상품의 유효성 검사
     private Product checkValidation(long productId, int quantity) {
@@ -47,14 +47,14 @@ public class Cart {
 
     // id와 stock의 유효성 검사는 아직 구현 X -> 저장되어 있는 Product 객체로서 유효한지 확인?
     // 상품 정보를 cart에 저장
-    public void addProduct(long productId, int quantity) throws CartLimitExcessException{
+    public void addProduct(long productId, int orderQuantity) throws CartLimitExcessException{
         // 장바구니에 저장된 항목 개수가 50개 이상이라면, 저장 불가
         if (cartNum >= MAX_NUM) {
             throw new CartLimitExcessException(cartNum);
         } else {
             // 상품유무, 재고유무의 유효성 검사
             // productId로 Product 객체 찾기
-            Product productById = checkValidation(productId, quantity);
+            Product productById = checkValidation(productId, orderQuantity);
 
             // 유효한 상품이 아니라면, 끝
             if (productById == null)
@@ -66,7 +66,7 @@ public class Cart {
             // 이미 cart에 있는 상품이라면, 개수만 수정
             for(Map<Product, Integer> product : cart) {
                 if (product.containsKey(productById)) {
-                    product.put(productById, product.get(productById) + quantity);
+                    product.put(productById, product.get(productById) + orderQuantity);
                     productExistence = true;
                     break;
                 }
@@ -74,50 +74,76 @@ public class Cart {
 
             if (!productExistence) {
                 Map<Product, Integer> newProduct = new HashMap<>();
-                newProduct.put(productById, quantity);
+                newProduct.put(productById, orderQuantity);
                 cart.add(newProduct);
             }
             System.out.println("장바구니에 상품이 담겼습니다.");
 
-            cartNum += quantity;
+            cartNum += orderQuantity;
         }
+        calculateTotalAmount();
     }
 
     // 삭제할 상품 장바구니에 없으면 X, 있으면 삭제
-    public void deleteProduct(Product productId, int quantity) {
+    public void deleteProduct(long productId, int discardQuantity) {
+        boolean didDiscard = false;
+        deleteFunction:
+        for(Map<Product, Integer> cartItem : cart) {
+            for (Map.Entry<Product, Integer> productQuantityMap : cartItem.entrySet()) {
+                // 삭제할 상품을 찾고 삭제 수량이 현재 수량과 많거나 같으면 해당 항목을 제거
+                if(productId == productQuantityMap.getKey().getId()) {
+                    if (productQuantityMap.getValue() <= discardQuantity) {
+                        cartNum -= productQuantityMap.getValue();
+                        String discardProductName = productQuantityMap.getKey().getName();
+                        cart.remove(productQuantityMap);
+                        didDiscard = true;
 
-        for(Map<Product, Integer> product : cart) {
-            if (product.containsKey(productId)) {
-                // 삭제하고자 하는 수량이 현재 장바구니에 들어있는 수량보다 많거나 같으면, 해당 항목 전부 삭제
-                if (product.get(productId) <= quantity) {
-                    cartNum -= product.get(productId);  // 해당 상품의 개수 전부 감소
-                    cart.remove(product);
-                    System.out.println("장바구니에서 해당 상품을 제거하였습니다.");
-                } else {
-                    product.put(productId, product.get(productId) - quantity);
-                    cartNum -= quantity;
-                    System.out.println("장바구니에서 해당 상품을 " + quantity + "개 제거하였습니다.");
+                        System.out.println("상품: " + discardProductName + " 을 제거했습니다.");
+                        break deleteFunction;
+                    } else {
+                        // 수량 줄이기
+                        productQuantityMap.setValue(productQuantityMap.getValue() - discardQuantity);
+                        cartNum -= discardQuantity;
+                        didDiscard = true;
+
+                        System.out.println("상품: " + productQuantityMap.getKey().getName() + " 을 " + discardQuantity + "개 제거했습니다.");
+                        break deleteFunction;
+                    }
                 }
-                // deleteCheck = true;
-            } else {
-                // 삭제하고자 하는 상품이 cart에 없다면,
-                System.out.println("장바구니에서 " + productId + " 상품을 찾을 수 없습니다.");
+            }
+        }
+        if(!didDiscard){
+            System.out.println("장바구니에서 상품 ID: " + productId + " 에 해당하는 상품을 찾지 못 했습니다.");
+        }
+        calculateTotalAmount();
+    }
+
+    // 장바구니 항목들의 총액 계산
+    private void calculateTotalAmount() {
+        for(Map<Product, Integer> cartItem : cart) {
+            for(Map.Entry<Product, Integer> productQuantityEntry : cartItem.entrySet()) {
+                totalAmount += productQuantityEntry.getKey().getPrice() * productQuantityEntry.getValue();
             }
         }
     }
 
-    // 장바구니 항목들의 총액 계산
-    public void getTotal(List<Map<Product, Integer>> cart, Long quantity) {
-        total = 0;
-
-        for(Map<Product, Integer> productInfo : cart) {
-            for(Map.Entry<Product, Integer> product : productInfo.entrySet()) {
-                total += product.getKey().getPrice() * product.getValue();
+    public void showCart(){
+        if(!cart.isEmpty()){
+            for (Map<Product, Integer> cartItem : cart){
+                for(Map.Entry<Product, Integer> productMap : cartItem.entrySet()){
+                    System.out.println("상품 ID: " + productMap.getKey().getId());
+                    System.out.println("상품명: " + productMap.getKey().getName());
+                    System.out.println("상품 가격: " + productMap.getKey().getPrice() + " 원");
+                    System.out.println("주문 수량: " + productMap.getValue());
+                }
             }
+            System.out.println("총 결제할 금액: " + totalAmount + " 원");
+        } else {
+            System.out.println("장바구니에 상품을 담지 않았습니다.");
         }
     }
 
     public OrderSheet makeOrder(){
-        return new OrderSheet(cart, total);
+        return new OrderSheet(cart, totalAmount);
     }
 }

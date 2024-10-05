@@ -1,5 +1,6 @@
 import cart.Cart;
-import cart.exception.CartLimitExcessException;
+import command_handler.CommandHandler;
+import command_handler.CommandHandlerImpl;
 import customer.Customer;
 
 import java.util.Scanner;
@@ -7,13 +8,13 @@ import java.util.Scanner;
 public class Main{
     private static final Cart cart = new Cart();
     private static final Customer customer = new Customer();
-    private static final CommandHandler commandHandler = new CommandHandler(cart, customer);
+    private static final CommandHandler commandHandler = new CommandHandlerImpl(cart, customer);
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         commandIOSystem:
         while(true) {
-            System.out.println("명령어를 입력해주세요: ");
+            System.out.print("명령어를 입력해주세요: ");
             String command = scanner.next();
             switch (command) {
                 case "exit":
@@ -26,10 +27,10 @@ public class Main{
                     commandHandler.listCommand();
                     break;
                 case "add":
-                    commandHandler.addCommand(scanner);
+                    commandHandler.addCommand();
                     break;
                 case "discard":
-                    commandHandler.discardCommand(scanner);
+                    commandHandler.discardCommand();
                     break;
                 case "cart":
                     commandHandler.cartCommand();

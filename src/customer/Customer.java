@@ -15,7 +15,7 @@ public class Customer {
     private long account;  // 잔액
     private int payDate;  // 신용카드 결제일
     private long money;  // 금액
-    private List<OrderSheet> orderSheetList = new ArrayList<OrderSheet>();
+    private final List<OrderSheet> orderSheetList = new ArrayList<OrderSheet>();
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -43,6 +43,24 @@ public class Customer {
         String newPhoneNumber = reader.readLine();
         this.userPhoneNumber = newPhoneNumber;
         System.out.println("전화번호가 수정되었습니다.");
+    }
+
+    public void addMyOrder(OrderSheet orderSheet){
+        if(orderSheet != null){
+            orderSheetList.add(orderSheet);
+        } else {
+            System.out.println("주문이 유효하지 않습니다.");
+        }
+    }
+
+    public void showMyOrders(){
+        if(!orderSheetList.isEmpty()){
+            for (OrderSheet orderSheet : orderSheetList){
+                orderSheet.showSheet();
+            }
+        } else {
+            System.out.println("주문 내역이 없습니다.");
+        }
     }
 
     // 잔액 확인 메소드

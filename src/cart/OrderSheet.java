@@ -24,6 +24,6 @@ public class OrderSheet {
                 System.out.println(product.getKey().getName() + ": " + product.getValue());
             }
         }
-        System.out.println("Total Amount: " + totalAmount);
+        System.out.println("결제 금액: " + totalAmount);
     }
 }
